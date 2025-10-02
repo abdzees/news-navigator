@@ -1,0 +1,7 @@
+fastapi
+uvicorn[standard]
+requests
+pydantic
+sentence-transformers
+sqlalchemy
+aiosqlite

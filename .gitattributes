@@ -1,0 +1,6 @@
+# Ensure consistent line endings
+* text=auto
+
+# Treat shell scripts as LF
+*.sh eol=lf
+*.ps1 eol=crlf
