@@ -7,7 +7,8 @@ with aiosqlite/asyncpg backends.
 import sqlite3
 from pathlib import Path
 
-DB_PATH = Path(__file__).resolve().parents[2] / ".." / "data" / "news.db"
+# Resolve DB to backend/data/news.db (workspace/backend/data/news.db)
+DB_PATH = Path(__file__).resolve().parents[2] / "data" / "news.db"
 
 
 def init_db():
@@ -32,8 +33,10 @@ def init_db():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id TEXT,
             article_id INTEGER,
+            category TEXT,
             reward REAL,
-            metadata TEXT
+            metadata TEXT,
+            timestamp TEXT DEFAULT (datetime('now'))
         )
         """
     )
