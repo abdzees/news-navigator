@@ -15,6 +15,8 @@ from fastapi import FastAPI
 
 # Import routers (module structure is prepared in api.routes)
 from app.api.routes import articles, recommend, feedback
+from app.db.database import init_db
+from app.core.logger import logger
 
 app = FastAPI(title="news-navigator-backend", version="0.1.0")
 
@@ -27,7 +29,13 @@ app.include_router(feedback.router, prefix="/api/feedback", tags=["feedback"])
 @app.on_event("startup")
 async def on_startup():
     """Initialize DB connections, ML models and external API clients here."""
-    # TODO: initialize database (app.state.db), load embeddings model, bandit state
+    # Initialize database tables (synchronous for now)
+    try:
+        init_db()
+        logger.info("Database initialized")
+    except Exception as e:
+        logger.warning(f"Failed to initialize database: {e}")
+    # TODO: initialize other resources (app.state.db), load embeddings model, bandit state
     # Example: app.state.db = await database.connect()
     pass
 

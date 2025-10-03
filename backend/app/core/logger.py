@@ -4,6 +4,7 @@ Simple logger setup for the backend.
 Replace with structured logging (loguru, structlog) in production.
 """
 import logging
+import os
 
 
 def get_logger(name: str = __name__):
@@ -14,7 +15,8 @@ def get_logger(name: str = __name__):
         formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
         handler.setFormatter(formatter)
         logger.addHandler(handler)
-        logger.setLevel(logging.INFO)
+        level = os.environ.get("LOG_LEVEL", "INFO").upper()
+        logger.setLevel(getattr(logging, level, logging.INFO))
     return logger
 
 
