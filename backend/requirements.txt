@@ -5,3 +5,4 @@ pydantic
 sentence-transformers
 sqlalchemy
 aiosqlite
+python-dotenv
