@@ -12,11 +12,13 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 # Import routers (module structure is prepared in api.routes)
 from app.api.routes import articles, recommend, feedback
 from app.db.database import init_db
 from app.core.logger import logger
+from app.core.config import settings
 
 # Use the requested application title and non-/api router prefixes
 app = FastAPI(title="News Navigator API")
@@ -25,6 +27,17 @@ app = FastAPI(title="News Navigator API")
 app.include_router(articles.router, prefix="/articles", tags=["articles"])
 app.include_router(recommend.router, prefix="/recommend", tags=["recommend"])
 app.include_router(feedback.router, prefix="/feedback", tags=["feedback"])
+
+
+# Configure CORS to allow frontend to call the API
+frontend_origin = settings.api_url
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[frontend_origin],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.on_event("startup")

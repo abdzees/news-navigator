@@ -5,6 +5,7 @@ Replace with structured logging (loguru, structlog) in production.
 """
 import logging
 import os
+from app.core.config import settings
 
 
 def get_logger(name: str = __name__):
@@ -15,7 +16,7 @@ def get_logger(name: str = __name__):
         formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
         handler.setFormatter(formatter)
         logger.addHandler(handler)
-        level = os.environ.get("LOG_LEVEL", "INFO").upper()
+        level = settings.log_level.upper() if getattr(settings, 'log_level', None) else os.environ.get("LOG_LEVEL", "INFO").upper()
         logger.setLevel(getattr(logging, level, logging.INFO))
     return logger
 
