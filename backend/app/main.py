@@ -18,12 +18,13 @@ from app.api.routes import articles, recommend, feedback
 from app.db.database import init_db
 from app.core.logger import logger
 
-app = FastAPI(title="news-navigator-backend", version="0.1.0")
+# Use the requested application title and non-/api router prefixes
+app = FastAPI(title="News Navigator API")
 
-# Include route modules
-app.include_router(articles.router, prefix="/api/articles", tags=["articles"])
-app.include_router(recommend.router, prefix="/api/recommend", tags=["recommend"])
-app.include_router(feedback.router, prefix="/api/feedback", tags=["feedback"])
+# Include route modules with the requested prefixes
+app.include_router(articles.router, prefix="/articles", tags=["articles"])
+app.include_router(recommend.router, prefix="/recommend", tags=["recommend"])
+app.include_router(feedback.router, prefix="/feedback", tags=["feedback"])
 
 
 @app.on_event("startup")
