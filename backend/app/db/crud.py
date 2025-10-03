@@ -5,7 +5,7 @@ Replace with async implementations or integrate SQLModel/SQLAlchemy for producti
 """
 import sqlite3
 from typing import List, Dict, Any
-from .database import DB_PATH
+from app.db.database import DB_PATH
 
 
 def list_articles() -> List[Dict[str, Any]]:
